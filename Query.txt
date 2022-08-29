@@ -1,0 +1,15 @@
+# Write your MySQL query statement below
+SELECT requests.request_at AS Day, ROUND((cancells.number_of_cancelled_requests / requests.number_of_requests), 2) AS Cancellation Rate
+FROM
+(SELECT request_at, COUNT(*) AS number_of_requests 
+FROM Trips
+WHERE Trips.client_id NOT IN (SELECT Users.users_id FROM Users WHERE Users.banned = 'Yes') AND Trips.driver_id NOT IN (SELECT Users.users_id FROM Users WHERE Users.banned = 'Yes')
+GROUP BY Trips.request_at
+ORDER BY Trips.request_at) requests
+JOIN
+(SELECT request_at, COUNT(*) AS number_of_cancelled_requests
+FROM Trips
+WHERE Trips.status NOT IN ('completed') AND Trips.client_id NOT IN (SELECT Users.users_id FROM Users WHERE Users.banned = 'Yes') AND Trips.driver_id NOT IN (SELECT Users.users_id FROM Users WHERE Users.banned = 'Yes')
+GROUP BY Trips.request_at
+ORDER BY Trips.request_at) cancells
+ON requests.request_at = cancells.request_at
