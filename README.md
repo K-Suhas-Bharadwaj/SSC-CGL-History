@@ -1,1 +1,1 @@
-This is a collection of presentations on various topics of Indian history and is intended for people preparing for SSC exams and want to get a glance of Indian history. Though not detailed, I believe it will be helpful for beginners.
+Just read. DON'T SPEND TIME ON README
